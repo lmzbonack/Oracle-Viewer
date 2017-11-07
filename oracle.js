@@ -1,3 +1,9 @@
+$("#submit").keyup(function(event) {
+    if (event.keyCode === 13) {
+        $("#button").click();
+    }
+});
+
 $("#button").click(function(){
     //grab user input
     var cardName = document.getElementById('submit').value;
@@ -26,8 +32,17 @@ function getRulings(res){
 }
 
 function getImage(res){
-    //console.log(res.data[0].editions[0].image_url);
-    $('#cardFace').attr("src",res.data[0].editions[0].image_url)
+    var editionsUrl = res.data[0].editions
+    //loop through editionsUrl and find the first image that is !="https://image.deckbrew.com/mtg/multiverseid/0.jpg". change the attr with that image then break the loop
+    console.log(editionsUrl);
+    editionsUrl.forEach(function(val){
+       if(val.image_url != "https://image.deckbrew.com/mtg/multiverseid/0.jpg"){
+           console.log(val.image_url);
+           $('#cardFace').attr("src",val.image_url)
+           return;
+       }
+    });
+    
 }
 
 function handleError(err){
