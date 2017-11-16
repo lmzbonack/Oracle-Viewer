@@ -21,14 +21,19 @@ $("#button").click(function(){
 });
 
 function getRulings(res){
+    $('#rulingsList').empty()
     var rulingsArray = res.data.cards[0].rulings
+    if (typeof rulingsArray == 'undefined'){
+       $('#rulingsList').append('<li>None</li><br>')
+    } else {
     //iterate through the rulings array and append each ruling and its info to a list
     //You probably do not have to call this everytime
-    $('#rulingsList').empty()
+    
     //You should see if a card has rulings before trying to iterate through
     rulingsArray.forEach(function(val){
        $('#rulingsList').append('<li>'+val.date+' - '+val.text+'</li><br>')
-    });
+        });
+    }
 }
 
 function getImage(res){
@@ -41,8 +46,7 @@ function getImage(res){
            $('#cardFace').attr("src",val.image_url)
            return;
        }
-    });
-    
+    }); 
 }
 
 function handleError(err){
